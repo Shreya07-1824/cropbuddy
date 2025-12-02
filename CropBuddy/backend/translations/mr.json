@@ -1,0 +1,60 @@
+{
+  "Select Your Language": "आपली भाषा निवडा",
+  "Continue": "सुरू ठेवा",
+  "Full Name": "पूर्ण नाव",
+  "Email ID": "ईमेल आयडी",
+  "Password": "पासवर्ड",
+  
+  "State": "राज्य",
+  "-- Select State --": "-- राज्य निवडा --",
+  "Andhra Pradesh": "आंध्र प्रदेश",
+  "Bihar": "बिहार",
+  "Delhi": "दिल्ली",
+  "Karnataka": "कर्नाटक",
+  "Maharashtra": "महाराष्ट्र",
+  "Tamil Nadu": "तमिळ नाडू",
+  "Mobile Number": "मोबाईल नंबर",
+  "Register": "नोंदणी करा",
+  "Already have an account": "आधीपासून खाते आहे",
+  "Sign in": "साइन इन",
+  
+
+  "Sign In": "साइन इन",
+  "Username": "वापरकर्तानाव",
+  
+  "Forgot password?": "पासवर्ड विसरलात?",
+  "Don't have an account": "खाते नाहीये",
+  
+  "OK": "ठीक आहे",
+
+  "Forgot Password ": "पासवर्ड विसरलात?",
+  "Enter your registered email": "आपला नोंदणीकृत ईमेल प्रविष्ट करा",
+  "Send Reset Link": "रीसेट लिंक पाठवा",
+  "Back to Sign In": "साइन इन वर परत जा",
+  
+
+  "Reset Your Password": "आपला पासवर्ड रीसेट करा",
+  "New Password": "नवीन पासवर्ड",
+  "Must contain at least 6 characters with letters and numbers": "पासवर्डमध्ये किमान 6 अक्षरे आणि अंक असावेत",
+  "Enter new password": "नवीन पासवर्ड प्रविष्ट करा",
+  "Confirm Password": "पासवर्डची पुष्टी करा",
+  "Reset Password": "पासवर्ड रीसेट करा",
+  "Passwords do not match. Please try again": "पासवर्ड जुळत नाहीत. कृपया पुन्हा प्रयत्न करा",
+  
+
+  "Verify OTP": "ओटीपी सत्यापित करा",
+  "Enter OTP": "ओटीपी प्रविष्ट करा",
+  
+
+  "Profile": "प्रोफाइल",
+  "Chat History": "चॅट इतिहास",
+  "Mandi Prices (API: Agmarknet))": "मंडी किंमती (API: Agmarknet)",
+  "Map (API: Leaflet + OpenStreetMap))": "नकाशा (API: Leaflet + OpenStreetMap)",
+  "Settings (Language, Notifications))": "सेटिंग्ज (भाषा, नोटिफिकेशन)",
+  "Logout": "लॉगआउट",
+  "CropBuddy": "क्रॉपबडी",
+  "Chat": "चॅट",
+  "Community": "समुदाय",
+  "Alerts": "अलर्ट्स",
+  "Hello! I'm CropBuddy, here to help with your crop-related questions)": "नमस्कार! मी क्रॉपबडी आहे, तुमच्या पिकांसंबंधी प्रश्नांमध्ये मदत करण्यासाठी."
+}

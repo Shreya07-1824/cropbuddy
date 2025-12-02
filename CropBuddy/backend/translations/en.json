@@ -1,0 +1,54 @@
+{
+  "Register": "Register",
+  "signin": "Sign In",
+  "forgot_password": "Forgot Password?",
+  "dashboard": "Dashboard",
+  "chatbot": "Chatbot",
+  "community": "Community",
+  "weather": "Weather",
+  "notifications": "Notifications",
+  "profile": "Profile",
+  "chat_history": "Chat History",
+  "mandi_price": "Mandi Price Map",
+  "outbreak_alerts": "Outbreak Alerts",
+  "settings": "Settings",
+  "logout": "Logout",
+
+  "Sign In": "Sign In",
+  "Username": "Username",
+  "Password": "Password",
+  
+  "Don't have an account": "Don't have an account",
+  
+  "OK": "OK",
+
+  
+  "Enter your registered email": "Enter your registered email",
+  "Send Reset Link": "Send Reset Link",
+  "Back to Sign In": "Back to Sign In",
+
+  "Reset Your Password": "Reset Your Password",
+  "New Password": "New Password",
+  "Must contain at least 6 characters with letters and numbers": "Must contain at least 6 characters with letters and numbers",
+  "Enter new password": "Enter new password",
+  "Confirm Password": "Confirm Password",
+  "Reset Password": "Reset Password",
+  "Passwords do not match. Please try again": "Passwords do not match. Please try again",
+  
+
+  "Verify OTP": "Verify OTP",
+  "Enter OTP": "Enter OTP",
+
+
+  "Profile": "Profile",
+  "Chat History": "Chat History",
+  "Mandi Prices (API: Agmarknet))": "Mandi Prices (API: Agmarknet)",
+  "Map (API: Leaflet + OpenStreetMap))": "Map (API: Leaflet + OpenStreetMap)",
+  "Settings (Language, Notifications))": "Settings (Language, Notifications)",
+  "Logout": "Logout",
+  "CropBuddy": "CropBuddy",
+  "Chat": "Chat",
+  "Community": "Community",
+  "Alerts": "Alerts",
+  "Hello! I'm CropBuddy, here to help with your crop-related questions)": "Hello! I'm CropBuddy, here to help with your crop-related questions"
+}

@@ -1,0 +1,594 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weather Dashboard</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: #f8f9fa;
+            min-height: 100vh;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 480px;
+            margin: 0 auto;
+            background: white;
+            min-height: 100vh;
+        }
+
+        /* Navigation */
+        .nav {
+            background: white;
+            padding: 15px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-radius: 12px;
+        }
+
+        .back-btn {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            color: #212529;
+            font-size: 16px;
+            cursor: pointer;
+            padding: 8px 12px;
+            border-radius: 8px;
+            transition: all 0.2s;
+            text-decoration: none;
+        }
+
+        .back-btn:hover {
+            background: #f8f9fa;
+        }
+
+        .nav-title {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: #212529;
+            font-size: 18px;
+            font-weight: 600;
+        }
+
+        .weather-emoji {
+            font-size: 22px;
+        }
+
+        /* Content Area */
+        .content {
+            padding: 20px;
+        }
+
+        /* Location Button - Moved up */
+        .district-selector {
+            background: white;
+            padding: 10px 20px;
+            margin-bottom: 15px;
+        }
+
+        .location-btn {
+            width: 100%;
+            padding: 12px 20px;
+            border: 2px solid #28a745;
+            border-radius: 10px;
+            font-size: 15px;
+            color: white;
+            background: #28a745;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.2s;
+        }
+
+        .location-btn:hover {
+            background: #218838;
+            border-color: #218838;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(40, 167, 69, 0.3);
+        }
+
+        /* City Name Display */
+        .city-display {
+            background: white;
+            padding: 15px 20px;
+            margin-bottom: 15px;
+            border-radius: 12px;
+            text-align: center;
+            border: 1px solid #e0e0e0;
+        }
+
+        .city-name {
+            font-size: 20px;
+            font-weight: 600;
+            color: #212529;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .location-icon {
+            font-size: 18px;
+        }
+
+        /* Weather Card */
+        .weather-card {
+            background: white;
+            border-radius: 16px;
+            padding: 20px;
+            margin-bottom: 20px;
+            border: 1px solid #e0e0e0;
+        }
+
+        .card-header {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 20px;
+            font-size: 17px;
+            font-weight: 500;
+            color: #212121;
+        }
+
+        .sun-icon {
+            font-size: 20px;
+        }
+
+        .weather-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-bottom: 15px;
+        }
+
+        .weather-item {
+            text-align: center;
+        }
+
+        .weather-value {
+            font-size: 32px;
+            font-weight: 600;
+            color: #2e7d32;
+            margin-bottom: 4px;
+        }
+
+        .weather-label {
+            color: #757575;
+            font-size: 13px;
+        }
+
+        .weather-condition {
+            text-align: center;
+            padding-top: 10px;
+        }
+
+        .condition-icon {
+            font-size: 40px;
+            margin-bottom: 8px;
+        }
+
+        .condition-text {
+            font-size: 15px;
+            color: #424242;
+            font-weight: 500;
+            text-transform: capitalize;
+        }
+
+        .wind-value {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 4px;
+            font-size: 32px;
+            font-weight: 600;
+            color: #2e7d32;
+        }
+
+        .wind-icon {
+            font-size: 24px;
+            color: #66bb6a;
+        }
+
+        .refresh-btn {
+            background:#28a745;
+            color: white;
+            border: none;
+            padding: 12px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 14px;
+            width: 100%;
+            transition: background 0.2s;
+            font-weight: 500;
+        }
+
+        .refresh-btn:hover {
+            background: #218838;
+        }
+
+        /* Alerts Section */
+        .alerts-section {
+            margin-top: 30px;
+        }
+
+        .alerts-header {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 20px;
+            font-size: 17px;
+            font-weight: 500;
+            color: #212121;
+            padding: 0 20px;
+        }
+
+        .warning-icon {
+            font-size: 22px;
+        }
+
+        .alert-item {
+            background: white;
+            border-radius: 16px;
+            padding: 18px;
+            margin: 0 20px 15px 20px;
+            display: flex;
+            gap: 15px;
+            border: 1px solid #e0e0e0;
+        }
+
+        .alert-icon-wrapper {
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 22px;
+            flex-shrink: 0;
+        }
+
+        .alert-icon-wrapper.rain {
+            background: #ef5350;
+            color: white;
+        }
+
+        .alert-icon-wrapper.pest {
+            background: #ffa726;
+            color: white;
+        }
+
+        .alert-icon-wrapper.heat {
+            background: #ff7043;
+            color: white;
+        }
+
+        .alert-body {
+            flex: 1;
+        }
+
+        .alert-title {
+            font-size: 15px;
+            font-weight: 600;
+            color: #212121;
+            margin-bottom: 6px;
+        }
+
+        .alert-desc {
+            color: #616161;
+            font-size: 13px;
+            line-height: 1.5;
+            margin-bottom: 8px;
+        }
+
+        .alert-time {
+            color: #9e9e9e;
+            font-size: 12px;
+        }
+
+        .loading {
+            text-align: center;
+            color: #757575;
+            padding: 20px;
+            font-size: 14px;
+        }
+
+        .error {
+            color: #d32f2f;
+            text-align: center;
+            padding: 15px;
+            background: #ffebee;
+            border-radius: 8px;
+            font-size: 13px;
+        }
+
+        .no-data {
+            text-align: center;
+            color: #9e9e9e;
+            padding: 30px;
+            font-size: 14px;
+        }
+
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Navigation -->
+        <div class="nav">
+            <a href="/dashboard" class="back-btn">
+                ← Back
+            </a>
+            <div class="nav-title">
+                <span class="weather-emoji">🌦️</span>
+                <span>Weather</span>
+            </div>
+            <div style="width: 80px;"></div>
+        </div>
+
+        <!-- Content -->
+        <div class="content">
+            <!-- Location Button -->
+            <div class="district-selector">
+                <button class="location-btn" onclick="getCurrentLocationWeather()">
+                    📍 Get Current Location Weather
+                </button>
+            </div>
+
+            <!-- City Name Display -->
+            <div class="city-display hidden" id="cityDisplay">
+                <div class="city-name">
+                    <span class="location-icon">📍</span>
+                    <span id="cityName">Loading...</span>
+                </div>
+                <div style="font-size: 12px; color: #9e9e9e; margin-top: 5px;" id="coordinates"></div>
+            </div>
+
+            <!-- Current Weather Card -->
+            <div class="weather-card">
+                <div class="card-header">
+                    <span class="sun-icon">🌡️</span>
+                    Current Weather
+                </div>
+
+                <div id="weatherContent">
+                    <div class="no-data">Click the button above to get weather for your location</div>
+                </div>
+
+                <button class="refresh-btn" onclick="getCurrentLocationWeather()">🔄 Refresh Weather</button>
+            </div>
+        </div>
+
+        <!-- Active Alerts -->
+        <div class="alerts-section">
+            <div class="alerts-header">
+                <span class="warning-icon">⚠️</span>
+                Active Alerts
+            </div>
+
+            <!-- Dynamic Alerts from Backend -->
+            <div id="dynamicAlerts"></div>
+
+            <!-- Static Alerts -->
+            <div class="alert-item">
+                <div class="alert-icon-wrapper rain">🌧️</div>
+                <div class="alert-body">
+                    <div class="alert-title">Heavy Rain Alert</div>
+                    <div class="alert-desc">Heavy rainfall expected in next 24 hours. Protect your crops.</div>
+                    <div class="alert-time">9/20/2025, 10:47:40 PM</div>
+                </div>
+            </div>
+
+            <div class="alert-item">
+                <div class="alert-icon-wrapper pest">🐛</div>
+                <div class="alert-body">
+                    <div class="alert-title">Pest Outbreak</div>
+                    <div class="alert-desc">Rice pest outbreak reported in your area. Take preventive measures.</div>
+                    <div class="alert-time">9/19/2025, 8:30:15 AM</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const BACKEND_URL = 'http://127.0.0.1:5000';
+
+        // Get current location weather from Flask backend
+        async function getCurrentLocationWeather() {
+            const weatherContent = document.getElementById("weatherContent");
+            const dynamicAlerts = document.getElementById("dynamicAlerts");
+            const cityDisplay = document.getElementById("cityDisplay");
+            const cityName = document.getElementById("cityName");
+
+            weatherContent.innerHTML = '<div class="loading">Getting your location...</div>';
+            cityDisplay.classList.add('hidden');
+
+            if (!navigator.geolocation) {
+                weatherContent.innerHTML = '<div class="error">Geolocation is not supported by your browser</div>';
+                return;
+            }
+
+            navigator.geolocation.getCurrentPosition(
+                async (position) => {
+                    const lat = position.coords.latitude;
+                    const lon = position.coords.longitude;
+
+                    // Show coordinates for debugging
+                    document.getElementById('coordinates').textContent = `Lat: ${lat.toFixed(4)}, Lon: ${lon.toFixed(4)}`;
+
+                    weatherContent.innerHTML = '<div class="loading">Fetching weather data from server...</div>';
+
+                    try {
+                        // Call Flask backend with coordinates
+                        const response = await fetch(`${BACKEND_URL}/api/weather?lat=${lat}&lon=${lon}`);
+
+                        if (!response.ok) {
+                            throw new Error('Failed to fetch weather from backend');
+                        }
+
+                        const data = await response.json();
+
+                        // Display city name
+                        if (data.city_name) {
+                            cityName.textContent = data.city_name;
+                            cityDisplay.classList.remove('hidden');
+                        } else {
+                            // Fallback: Get city name from reverse geocoding
+                            getCityName(lat, lon);
+                        }
+
+                        // Get weather icon
+                        const weatherIcon = getWeatherIcon(data.weather_code, data.weather_description);
+
+                        // Display weather in 2x2 grid
+                        weatherContent.innerHTML = `
+                            <div class="weather-grid">
+                                <div class="weather-item">
+                                    <div class="weather-value">${Math.round(data.temperature)}°C</div>
+                                    <div class="weather-label">Temperature</div>
+                                </div>
+                                <div class="weather-item">
+                                    <div class="condition-icon">${weatherIcon}</div>
+                                    <div class="condition-text">${data.weather_description}</div>
+                                </div>
+                                <div class="weather-item">
+                                    <div class="weather-value">${Math.round(data.humidity)}%</div>
+                                    <div class="weather-label">Humidity</div>
+                                </div>
+                                <div class="weather-item">
+                                    <div class="wind-value">
+                                        <span class="wind-icon">🍃</span>
+                                        <span>${Math.round(data.wind_speed)}</span>
+                                    </div>
+                                    <div class="weather-label">km/h</div>
+                                </div>
+                            </div>
+                        `;
+
+                        // Display alerts from backend
+                        dynamicAlerts.innerHTML = '';
+                        
+                        if (data.alerts && data.alerts.length > 0) {
+                            data.alerts.forEach(alert => {
+                                const alertDiv = document.createElement('div');
+                                alertDiv.className = 'alert-item';
+                                alertDiv.innerHTML = `
+                                    <div class="alert-icon-wrapper ${alert.type}">${alert.icon}</div>
+                                    <div class="alert-body">
+                                        <div class="alert-title">${alert.title}</div>
+                                        <div class="alert-desc">${alert.description}</div>
+                                        <div class="alert-time">${new Date().toLocaleString()}</div>
+                                    </div>
+                                `;
+                                dynamicAlerts.appendChild(alertDiv);
+                            });
+                        }
+
+                    } catch (error) {
+                        console.error('Weather fetch error:', error);
+                        weatherContent.innerHTML = `
+                            <div class="error">
+                                Failed to fetch weather data.<br>
+                                Please ensure:<br>
+                                1. Flask server is running<br>
+                                2. Tomorrow.io API key is configured<br>
+                                3. Backend is accessible
+                            </div>
+                        `;
+                    }
+                },
+                (error) => {
+                    let errorMsg = 'Unable to get your location. ';
+                    switch(error.code) {
+                        case error.PERMISSION_DENIED:
+                            errorMsg += 'Please allow location access.';
+                            break;
+                        case error.POSITION_UNAVAILABLE:
+                            errorMsg += 'Location information unavailable.';
+                            break;
+                        case error.TIMEOUT:
+                            errorMsg += 'Location request timed out.';
+                            break;
+                        default:
+                            errorMsg += 'Unknown error occurred.';
+                    }
+                    weatherContent.innerHTML = `<div class="error">${errorMsg}</div>`;
+                }
+            );
+        }
+
+        // Fallback function to get city name using reverse geocoding
+        async function getCityName(lat, lon) {
+            const cityDisplay = document.getElementById("cityDisplay");
+            const cityName = document.getElementById("cityName");
+
+            try {
+                const response = await fetch(`https://nominatim.openstreetmap.org/reverse?lat=${lat}&lon=${lon}&format=json&addressdetails=1`);
+                const data = await response.json();
+                
+                console.log('Location data:', data); // Debug log
+                
+                // Try to get the most relevant location name
+                const address = data.address;
+                const locationName = 
+                    address.city || 
+                    address.town || 
+                    address.village || 
+                    address.county || 
+                    address.state_district ||
+                    address.suburb ||
+                    address.neighbourhood ||
+                    address.state || 
+                    'Unknown Location';
+                
+                cityName.textContent = locationName;
+                cityDisplay.classList.remove('hidden');
+            } catch (error) {
+                console.error('City name fetch error:', error);
+                cityName.textContent = `${lat.toFixed(2)}, ${lon.toFixed(2)}`;
+                cityDisplay.classList.remove('hidden');
+            }
+        }
+
+        function getWeatherIcon(code, description) {
+            // Tomorrow.io weather codes
+            if (code === 1000 || code === 1100) return '☀️';
+            if (code === 1101) return '🌤️';
+            if (code === 1102 || code === 1001) return '☁️';
+            if (code === 2000 || code === 2100) return '🌫️';
+            if (code >= 4000 && code <= 4201) return '🌧️';
+            if (code >= 5000 && code <= 5101) return '❄️';
+            if (code >= 6000 && code <= 6201) return '🌨️';
+            if (code >= 7000 && code <= 7102) return '🧊';
+            if (code === 8000) return '⛈️';
+            
+            // Fallback to description-based icons
+            const desc = description.toLowerCase();
+            if (desc.includes('clear') || desc.includes('sunny')) return '☀️';
+            if (desc.includes('partly') || desc.includes('partial')) return '⛅';
+            if (desc.includes('cloud')) return '☁️';
+            if (desc.includes('rain') || desc.includes('drizzle')) return '🌧️';
+            if (desc.includes('storm') || desc.includes('thunder')) return '⛈️';
+            if (desc.includes('snow')) return '❄️';
+            if (desc.includes('fog') || desc.includes('mist')) return '🌫️';
+            if (desc.includes('wind')) return '💨';
+            
+            return '🌤️';
+        }
+
+        // Auto-load weather on page load
+        getCurrentLocationWeather();
+    </script>
+</body>
+</html>

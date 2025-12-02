@@ -1,0 +1,754 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CropBuddy Dashboard</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #e8f5e9 0%, #f1f8e9 100%);
+            min-height: 100vh;
+        }
+
+        /* Header */
+        .header {
+            background: white;
+            padding: 15px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            position: relative;
+            z-index: 100;
+            height: 70px;
+        }
+
+        .menu-btn {
+            background: none;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+            color: #666;
+            padding: 5px 10px;
+        }
+
+        .header-icons {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+        }
+
+        .icon-btn {
+            background: none;
+            border: none;
+            font-size: 22px;
+            cursor: pointer;
+            color: #666;
+            position: relative;
+            padding: 8px;
+            border-radius: 50%;
+            transition: background 0.3s;
+        }
+
+        .icon-btn:hover {
+            background: #f0f0f0;
+        }
+
+        .notification-badge {
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            background: #ff4444;
+            color: white;
+            border-radius: 50%;
+            width: 18px;
+            height: 18px;
+            font-size: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            position: fixed;
+            left: -350px;
+            top: 0;
+            width: 350px;
+            height: 100vh;
+            background: white;
+            box-shadow: 2px 0 10px rgba(0,0,0,0.1);
+            transition: left 0.3s ease;
+            z-index: 1000;
+            overflow-y: auto;
+        }
+
+        .sidebar.active {
+            left: 0;
+        }
+
+        .sidebar-header {
+            padding: 20px;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .sidebar-header h2 {
+            color: #66bb6a;
+            font-size: 24px;
+        }
+
+        .close-btn {
+            margin-left: auto;
+            background: none;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+            color: #666;
+        }
+
+        .sidebar-menu {
+            padding: 20px 0;
+        }
+
+        .menu-item {
+            
+            padding: 15px 30px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            cursor: pointer;
+            transition: background 0.3s;
+            color: #666;
+            text-decoration: none;
+            font-size: 16px;
+        }
+
+        .menu-item:hover {
+            background: #f5f5f5;
+        }
+
+        .menu-icon {
+            
+            font-size: 20px;
+            width: 25px;
+        }
+
+        /* Overlay */
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s, visibility 0.3s;
+            z-index: 999;
+        }
+
+        .overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        /* Main Content */
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        .welcome-section {
+            text-align: center;
+            margin-bottom: 28px;
+        }
+
+        .welcome-section h1 {
+            color: #66bb6a;
+            font-size: 25px;
+            margin-top:-20px;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+                /* Feature Cards */
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-bottom: 50px;
+        }
+
+        .feature-card {
+            background: white;
+            border-radius: 15px;
+            padding: 40px;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+            cursor: pointer;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 15px rgba(0,0,0,0.15);
+        }
+
+        .feature-icon {
+            width: 80px;
+            height: 80px;
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 40px;
+            margin: 0 auto 20px;
+        }
+
+        .feature-card:nth-child(1) .feature-icon {
+            background: #c8e6c9;
+            color: #66bb6a;
+        }
+
+        .feature-card:nth-child(2) .feature-icon {
+            background: #c5cae9;
+            color: #5c6bc0;
+        }
+
+        .feature-card:nth-child(3) .feature-icon {
+            background: #b2ebf2;
+            color: #26c6da;
+        }
+
+        .feature-card h3 {
+            font-size: 24px;
+            margin-bottom: 10px;
+        }
+
+        .feature-card:nth-child(1) h3 {
+            color: #66bb6a;
+        }
+
+        .feature-card:nth-child(2) h3 {
+            color: #5c6bc0;
+        }
+
+        .feature-card:nth-child(3) h3 {
+            color: #26c6da;
+        }
+
+        .feature-card p {
+            color: #999;
+        }
+	
+	.feature-card:nth-child(4)
+        .feature-icon {
+   	 background: #ffe0b2;
+         color: #fb8c00;
+        }
+
+      .feature-card:nth-child(4) h3 {
+      color: #fb8c00;
+        }
+
+
+        /* Quick Insights */
+        .insights-section {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        .insights-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 30px;
+            font-size: 24px;
+            color: #666;
+        }
+
+        .insights-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+        }
+
+        .insight-card {
+            padding: 20px;
+            border-radius: 10px;
+            background: #f9f9f9;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .insight-card:hover {
+            background: #f0f0f0;
+            transform: scale(1.02);
+        }
+
+        .insight-label {
+            color: #999;
+            font-size: 14px;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .insight-value {
+            font-size: 32px;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 5px;
+        }
+
+        .insight-subtext {
+            font-size: 12px;
+            color: #999;
+        }
+
+        /* Language Modal */
+        .modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 2000;
+        }
+
+        .modal.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            width: 400px;
+            max-width: 90%;
+            animation: modalSlideIn 0.3s ease;
+        }
+
+        @keyframes modalSlideIn {
+            from {
+                transform: translateY(-50px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .modal-header h3 {
+            color: #66bb6a;
+            font-size: 22px;
+        }
+
+        .language-options {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .language-option {
+            padding: 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .language-option:hover {
+            border-color: #66bb6a;
+            background: #f1f8e9;
+        }
+
+        .language-option.selected {
+            border-color: #66bb6a;
+            background: #e8f5e9;
+        }
+
+        /* Notifications Panel */
+        .notifications-panel {
+            position: fixed;
+            right: -400px;
+            top: 0;
+            width: 400px;
+            height: 100vh;
+            background: white;
+            box-shadow: -2px 0 10px rgba(0,0,0,0.1);
+            transition: right 0.3s ease;
+            z-index: 1500;
+            overflow-y: auto;
+        }
+
+        .notifications-panel.active {
+            right: 0;
+        }
+
+        .notifications-header {
+            padding: 20px;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .notifications-header h3 {
+            color: #66bb6a;
+            font-size: 22px;
+        }
+
+        .notification-item {
+            padding: 20px;
+            border-bottom: 1px solid #eee;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .notification-item:hover {
+            background: #f9f9f9;
+        }
+
+        .notification-item.unread {
+            background: #f1f8e9;
+        }
+
+        .notification-title {
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 5px;
+        }
+
+        .notification-text {
+            color: #666;
+            font-size: 14px;
+            margin-bottom: 5px;
+        }
+
+        .notification-time {
+            color: #999;
+            font-size: 12px;
+        }
+
+        .menu-item a {
+          text-decoration:none;
+        }
+	/* Mobile: Show 2 cards per row */
+       @media (max-width: 768px) {
+      .features {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 20px;
+        }
+       .feature-card {
+        padding: 20px; /* smaller padding for mobile */
+    }
+}
+      .header-logo
+      {
+       margin-right: auto;
+      }
+
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <div class="header">
+        <button class="menu-btn" onclick="toggleSidebar()">☰</button>
+        <img src="{{url_for('static',filename='images/logo.png')}}" alt="CropBuddy Logo" class="header-logo" height="70px" width="70px">
+        <div class="header-icons">
+	     
+            <button class="icon-btn" onclick="toggleLanguageModal()">🌐</button>
+            <button class="icon-btn" onclick="toggleNotifications()">
+                🔔
+                <span class="notification-badge">3</span>
+	    
+            </button>
+        </div>
+    </div>
+
+    <!-- Sidebar -->
+    <div class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <span style="font-size: 24px;">🌾</span>
+            <h2>CropBuddy</h2>
+            <button class="close-btn" onclick="toggleSidebar()">✕</button>
+        </div>
+        <div class="sidebar-menu">
+            <div class="menu-item">
+                <span class="menu-icon">👤</span>
+                <span>Profile</span>
+            </div>
+            <div class="menu-item">
+                <span class="menu-icon">🛒</span>
+                <span>Shop</span>
+            </div>
+            <div class="menu-item">
+                <span class="menu-icon">📋</span>
+                <span>Schemes</span>
+            </div>
+            <div class="menu-item">
+                <span class="menu-icon">🌍</span>
+                <span>Map</span>
+            </div>
+            <div class="menu-item">
+                <span class="menu-icon">💬</span>
+                <span>Chat History</span>
+            </div>
+            <div class="menu-item">
+                <span class="menu-icon">📊</span>
+                <span>Analytics Dashboard</span>
+            </div>
+            <div class="menu-item">
+                <span class="menu-icon">⚠</span>
+                <span>Outbreak Alerts</span>
+            </div>
+	    <div class="menu-item">
+                <span class="menu-icon">💰</span>
+                <span><a href="{{ url_for('mandi_prices') }}">Mandi Prices</a></span>
+            </div>
+
+            <div class="menu-item">
+                <span class="menu-icon">⚙</span>
+                <span>Settings</span>
+            </div>
+            <div class="menu-item">
+                <span class="menu-icon">🚪</span>
+                <span><a href="/logout">Logout</a></span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Overlay -->
+    <div class="overlay" id="overlay" onclick="closeSidebar()"></div>
+
+    <!-- Main Content -->
+    <div class="container">
+        <div class="welcome-section">
+            <h1>Welcome to CropBuddy🌾</h1>
+            
+        </div>
+
+        <!-- Feature Cards -->
+        <div class="features">
+            <div class="feature-card">
+                <div class="feature-icon">💬</div>
+                <h3>Chat</h3>
+                <p>Ask questions, get farming advice</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">👥</div>
+                <h3>Community</h3>
+                <p>Connect with fellow farmers</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">☁</div>
+                <h3><a href="/weather"> Weather</a></h3>
+                <p>Local weather updates & forecasts</p>
+            </div>
+	    <div class="feature-card">
+    		<div class="feature-icon">🌱</div>
+    		<h3>Soil Detection</h3>
+    		<p>Analyze soil health & nutrients</p>
+            </div>
+
+        </div>
+
+        <!-- Quick Insights -->
+        <div class="insights-section">
+            <div class="insights-header">
+                <span>📊</span>
+                <span>Quick Insights</span>
+            </div>
+            <div class="insights-grid">
+                <div class="insight-card">
+                    <div class="insight-label">🌡 Weather Trends</div>
+                    <div class="insight-value">28°C</div>
+                    <div class="insight-subtext">↑ 2° from yesterday</div>
+                </div>
+                <div class="insight-card">
+                    <div class="insight-label">🌾 Crop Yield</div>
+                    <div class="insight-value">85%</div>
+                    <div class="insight-subtext">↑ 8% this season</div>
+                </div>
+                <div class="insight-card">
+                    <div class="insight-label">💰 Market Price</div>
+                    <div class="insight-value">₹450/kg</div>
+                    <div class="insight-subtext">↑ ₹20 this week</div>
+                </div>
+                <div class="insight-card">
+                    <div class="insight-label">👥 Community</div>
+                    <div class="insight-value">234</div>
+                    <div class="insight-subtext">Active members today</div>
+                </div>
+                <div class="insight-card">
+                    <div class="insight-label">⚠ Outbreak Risk</div>
+                    <div class="insight-value">Low</div>
+                    <div class="insight-subtext">No alerts in your area</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Language Modal -->
+    <div class="modal" id="languageModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Select Language</h3>
+                <button class="close-btn" onclick="toggleLanguageModal()">✕</button>
+            </div>
+            <div class="language-options">
+                <div class="language-option selected" onclick="selectLanguage(this, 'en')">
+                    <span>🇬🇧</span>
+                    <span>English</span>
+                </div>
+                <div class="language-option" onclick="selectLanguage(this, 'hi')">
+                    <span>🇮🇳</span>
+                    <span>हिन्दी (Hindi)</span>
+                </div>
+                <div class="language-option" onclick="selectLanguage(this, 'mr')">
+                    <span>🇮🇳</span>
+                    <span>मराठी (Marathi)</span>
+                </div>
+                <div class="language-option" onclick="selectLanguage(this, 'ta')">
+                    <span>🇮🇳</span>
+                    <span>தமிழ் (Tamil)</span>
+                </div>
+                <div class="language-option" onclick="selectLanguage(this, 'te')">
+                    <span>🇮🇳</span>
+                    <span>తెలుగు (Telugu)</span>
+                </div>
+                <div class="language-option" onclick="selectLanguage(this, 'bn')">
+                    <span>🇮🇳</span>
+                    <span>বাংলা (Bengali)</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Notifications Panel -->
+    <div class="notifications-panel" id="notificationsPanel">
+        <div class="notifications-header">
+            <h3>Notifications</h3>
+            <button class="close-btn" onclick="toggleNotifications()">✕</button>
+        </div>
+        <div class="notification-item unread">
+            <div class="notification-title">🌧 Rain Alert</div>
+            <div class="notification-text">Heavy rainfall expected in your area tomorrow</div>
+            <div class="notification-time">2 hours ago</div>
+        </div>
+        <div class="notification-item unread">
+            <div class="notification-title">💰 Price Update</div>
+            <div class="notification-text">Wheat prices increased by ₹30/kg in local market</div>
+            <div class="notification-time">5 hours ago</div>
+        </div>
+        <div class="notification-item unread">
+            <div class="notification-title">🎉 New Scheme Available</div>
+            <div class="notification-text">PM-KISAN scheme applications open for this quarter</div>
+            <div class="notification-time">1 day ago</div>
+        </div>
+        <div class="notification-item">
+            <div class="notification-title">👥 Community Post</div>
+            <div class="notification-text">Rajesh Kumar shared tips about organic farming</div>
+            <div class="notification-time">2 days ago</div>
+        </div>
+        <div class="notification-item">
+            <div class="notification-title">⚠ Pest Alert</div>
+            <div class="notification-text">Locust activity reported 50km from your location</div>
+            <div class="notification-time">3 days ago</div>
+        </div>
+    </div>
+
+    <script>
+        function toggleSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            const overlay = document.getElementById('overlay');
+            sidebar.classList.toggle('active');
+            overlay.classList.toggle('active');
+        }
+
+        function closeSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            const overlay = document.getElementById('overlay');
+            sidebar.classList.remove('active');
+            overlay.classList.remove('active');
+        }
+
+        function toggleLanguageModal() {
+            const modal = document.getElementById('languageModal');
+            modal.classList.toggle('active');
+        }
+
+        function selectLanguage(element, lang) {
+            const options = document.querySelectorAll('.language-option');
+            options.forEach(opt => opt.classList.remove('selected'));
+            element.classList.add('selected');
+            
+            setTimeout(() => {
+                toggleLanguageModal();
+                alert('Language changed to: ' + element.textContent.trim());
+            }, 300);
+        }
+
+        function toggleNotifications() {
+            const panel = document.getElementById('notificationsPanel');
+            const overlay = document.getElementById('overlay');
+            panel.classList.toggle('active');
+            overlay.classList.toggle('active');
+            
+            if (panel.classList.contains('active')) {
+                document.querySelector('.notification-badge').style.display = 'none';
+            }
+        }
+
+        // Close panels when clicking overlay
+        document.getElementById('overlay').addEventListener('click', function() {
+            closeSidebar();
+            document.getElementById('notificationsPanel').classList.remove('active');
+            this.classList.remove('active');
+        });
+
+        // Add click animations to insight cards
+        document.querySelectorAll('.insight-card').forEach(card => {
+            card.addEventListener('click', function() {
+                this.style.transform = 'scale(0.95)';
+                setTimeout(() => {
+                    this.style.transform = 'scale(1.02)';
+                }, 100);
+            });
+        });
+    </script>
+</body>
+</html>

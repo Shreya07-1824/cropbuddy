@@ -1,0 +1,73 @@
+{
+  
+  "Select Your Language": "अपनी भाषा चुनें",
+  "Continue": "जारी रखें",
+  "Full Name": "पूरा नाम",
+  "Email ID": "ईमेल आईडी",
+  
+  
+  "State": "राज्य",
+  "-- Select State --": "-- राज्य चुनें --",
+  "Andhra Pradesh": "आंध्र प्रदेश",
+  "Bihar": "बिहार",
+  "Delhi": "दिल्ली",
+  "Karnataka": "कर्नाटक",
+  "Maharashtra": "महाराष्ट्र",
+  "Tamil Nadu": "तमिलनाडु",
+  "Mobile Number": "मोबाइल नंबर",
+
+  "Already have an account": "पहले से खाता है",
+  "Sign in": "साइन इन",
+
+  
+  "Register": "पंजीकरण",
+  "signin": "साइन इन",
+  "forgot_password": "पासवर्ड भूल गए?",
+  "dashboard": "डैशबोर्ड",
+  "chatbot": "चैटबॉट",
+  "community": "समुदाय",
+  "weather": "मौसम",
+  "notifications": "सूचनाएँ",
+  "profile": "प्रोफ़ाइल",
+  "chat_history": "चैट इतिहास",
+  "mandi_price": "मंडी मूल्य मानचित्र",
+  "outbreak_alerts": "रोग प्रकोप चेतावनी",
+  "settings": "सेटिंग्स",
+  "logout": "लॉग आउट",
+  
+
+  "Sign In": "साइन इन",
+  "Username": "उपयोगकर्ता नाम",
+  "Password": "पासवर्ड",
+  "Forgot password?": "पासवर्ड भूल गए?",
+  "Don't have an account": "खाता नहीं है",
+  
+
+  "Enter your registered email": "अपना पंजीकृत ईमेल दर्ज करें",
+  "Send Reset Link": "रीसेट लिंक भेजें",
+  "Back to Sign In": "साइन इन पर वापस जाएं",
+  
+
+  "Reset Your Password": "अपना पासवर्ड रीसेट करें",
+  "New Password": "नया पासवर्ड",
+  "Must contain at least 6 characters with letters and numbers": "पासवर्ड में कम से कम 6 अक्षर और अंक होने चाहिए",
+  "Enter new password": "नया पासवर्ड दर्ज करें",
+  "Confirm Password": "पासवर्ड की पुष्टि करें",
+  "Reset Password": "पासवर्ड रीसेट करें",
+  "Passwords do not match. Please try again": "पासवर्ड मेल नहीं खा रहे हैं। कृपया पुनः प्रयास करें",
+  
+  "Verify OTP": "ओटीपी सत्यापित करें",
+  "Enter OTP": "ओटीपी दर्ज करें",
+  "OK": "ठीक है",
+  "Profile": "प्रोफ़ाइल",
+  "Chat History": "चैट इतिहास",
+  "Mandi Prices (API: Agmarknet))": "मंडी कीमतें (API: Agmarknet)",
+  "Map (API: Leaflet + OpenStreetMap))": "मानचित्र (API: Leaflet + OpenStreetMap)",
+  "Settings (Language, Notifications))": "सेटिंग्स (भाषा, नोटिफिकेशन)",
+  "Logout": "लॉग आउट",
+  "CropBuddy": "क्रॉपबडी",
+  "Chat": "चैट",
+  "Community": "समुदाय",
+  "Alerts": "अलर्ट्स",
+  "Hello! I'm CropBuddy, here to help with your crop-related questions)": "नमस्ते! मैं क्रॉपबडी हूँ, आपकी फसल से संबंधित सवालों में मदद करने के लिए।"
+}

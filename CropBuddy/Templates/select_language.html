@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>{{t("Select Language")}}</title>
+  <!-- Main Styles -->
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+
+  <!-- Modal Styles -->
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/modal.css') }}">
+
+</head>
+<body>
+    <form method="POST" action="{{url_for('home')}}">
+
+  <h2>{{t("Select Your Language")}}</h2>
+
+  <input type="radio" name="language" value="en" id="en"  required>
+  <label for="en">English</label><br>
+
+  <input type="radio" name="language" value="hi" id="hi"  required>
+  <label for="en">हिंदी</label><br>
+
+  <input type="radio" name="language" value="mr" id="mr"  required>
+  <label for="en">मराठी</label><br>
+  <!--<a href="{{ url_for('set_language', lang='en') }}">English</a><br>
+  <a href="{{ url_for('set_language', lang='hi') }}">हिंदी</a><br>
+  <a href="{{ url_for('set_language', lang='mr') }}">मराठी</a>-->
+
+  <button type="submit">{{t("continue")}}</button>
+  </form>
+</body>
+</html>

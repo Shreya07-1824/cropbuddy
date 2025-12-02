@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{{t("Verify OTP")}}</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/modal.css') }}">
+</head>
+<body>
+  <div class="container">
+    <h2>OTP Verification</h2>
+    <form action="/verify_otp" method="POST">
+      <label for="otp">{{t("Enter OTP")}}</label>
+      <input type="text" id="otp" name="otp" placeholder="Enter the OTP sent to your email" required>
+
+      <button type="submit">{{t("Verify OTP")}}</button>
+    </form>
+  </div>
+
+  <!-- Modal for alerts -->
+  {% if alert_message %}
+  <div id="customModal" class="modal" style="display: flex;">
+    <div class="modal-content">
+      <p>{{ alert_message }}</p>
+      <button onclick="closeModal()">{{t("OK")}}</button>
+    </div>
+  </div>
+  {% endif %}
+
+  <script>
+    function closeModal() {
+      document.getElementById('customModal').style.display = 'none';
+    }
+    // Close modal when clicking outside
+    window.onclick = function(event) {
+      const modal = document.getElementById('customModal');
+      if (event.target == modal) {
+        modal.style.display = 'none';
+      }
+    }
+  </script>
+</body>
+</html>
